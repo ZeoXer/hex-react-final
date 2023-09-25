@@ -1,8 +1,16 @@
-import { useState } from "react";
-import { addNewProduct } from "../api/functions";
+import { useState, useEffect } from "react";
+import { addNewProduct, editProductById } from "../api/functions";
 
-const ProductModal = ({ closeProductModal, fetchProducts }) => {
-  const emptyTempData = {
+const CREATE_PRODUCT = "create-product";
+const EDIT_PRODUCT = "edit-product";
+
+const ProductModal = ({
+  closeProductModal,
+  fetchProducts,
+  tempProduct,
+  type,
+}) => {
+  const [tempData, setTempData] = useState({
     title: "",
     category: "",
     origin_price: 100,
@@ -12,20 +20,35 @@ const ProductModal = ({ closeProductModal, fetchProducts }) => {
     content: "",
     is_enabled: 0,
     imageUrl: "",
-  };
+  });
 
-  const [tempData, setTempData] = useState(emptyTempData);
+  useEffect(() => {
+    if (type === CREATE_PRODUCT) {
+      setTempData({
+        title: "",
+        category: "",
+        origin_price: 100,
+        price: 300,
+        unit: "",
+        description: "",
+        content: "",
+        is_enabled: 0,
+        imageUrl: "",
+      });
+    } else if (type === EDIT_PRODUCT) {
+      setTempData(tempProduct);
+    }
+  }, [type, tempProduct]);
 
   const submit = async () => {
     try {
-      const res = await addNewProduct(tempData);
-      if (res.data.success) {
-        // TODO: 新增提示
-        console.log(res.data.message);
+      if (type === CREATE_PRODUCT) {
+        await addNewProduct(tempData);
+      } else if (type === EDIT_PRODUCT) {
+        await editProductById(tempProduct.id, tempData);
       }
       closeProductModal();
       fetchProducts();
-      setTempData(emptyTempData)
     } catch (error) {
       console.log(error);
     }
@@ -55,7 +78,8 @@ const ProductModal = ({ closeProductModal, fetchProducts }) => {
         <div className="modal-content">
           <div className="modal-header">
             <h1 className="modal-title fs-5" id="exampleModalLabel">
-              建立新商品
+              {type === CREATE_PRODUCT && "建立新商品"}
+              {type === EDIT_PRODUCT && `編輯 ${tempProduct.title}`}
             </h1>
             <button
               type="button"
@@ -209,7 +233,7 @@ const ProductModal = ({ closeProductModal, fetchProducts }) => {
                         placeholder="請輸入產品說明內容"
                         className="form-check-input"
                         onChange={handleChange}
-                        checked={tempData.is_enabled}
+                        checked={!!tempData.is_enabled}
                       />
                     </label>
                   </div>
