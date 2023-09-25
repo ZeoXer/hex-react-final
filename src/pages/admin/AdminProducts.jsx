@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from "react";
-import { getAdminProducts } from "../../api/functions";
+import { deleteProductById, getAdminProducts } from "../../api/functions";
 import { Modal } from "bootstrap";
 import ProductModal from "../../components/ProductModal";
+import DeleteModal from "../../components/DeleteModal";
 
 const CREATE_PRODUCT = "create-product";
 const EDIT_PRODUCT = "edit-product";
@@ -13,9 +14,14 @@ const AdminProducts = () => {
   const [tempProduct, setTempProduct] = useState({});
 
   const productModal = useRef();
+  const deleteModal = useRef();
 
   useEffect(() => {
     productModal.current = new Modal("#productModal", {
+      backdrop: "static",
+    });
+
+    deleteModal.current = new Modal("#deleteModal", {
       backdrop: "static",
     });
 
@@ -38,6 +44,27 @@ const AdminProducts = () => {
     productModal.current.hide();
   };
 
+  const openDeleteModal = (product) => {
+    setTempProduct(product);
+    deleteModal.current.show();
+  };
+
+  const closeDeleteModal = () => {
+    deleteModal.current.hide();
+  };
+
+  const deleteProduct = async (id) => {
+    try {
+      const { data } = await deleteProductById(id);
+      if (data.success) {
+        closeDeleteModal();
+        fetchProducts();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="p-3">
       <ProductModal
@@ -45,6 +72,11 @@ const AdminProducts = () => {
         fetchProducts={fetchProducts}
         tempProduct={tempProduct}
         type={type}
+      />
+      <DeleteModal
+        closeDeleteModal={closeDeleteModal}
+        text={tempProduct.title}
+        deleteFunc={() => deleteProduct(tempProduct.id)}
       />
       <h3>產品列表</h3>
       <hr />
@@ -86,6 +118,7 @@ const AdminProducts = () => {
                   <button
                     type="button"
                     className="btn btn-outline-danger btn-sm ms-2"
+                    onClick={() => openDeleteModal(product)}
                   >
                     刪除
                   </button>
@@ -103,10 +136,17 @@ const AdminProducts = () => {
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          {[...new Array(5)].map((_, i) => (
+          {[...new Array(pagination.total_pages)].map((_, i) => (
             // eslint-disable-next-line react/no-array-index-key
             <li className="page-item" key={`${i}_page`}>
-              <a className={`page-link ${i + 1 === 1 && "active"}`} href="/">
+              <a
+                className={`page-link ${i + 1 === 1 && "active"}`}
+                href="/"
+                onClick={(e) => {
+                  e.preventDefault();
+                  fetchProducts(i + 1);
+                }}
+              >
                 {i + 1}
               </a>
             </li>
