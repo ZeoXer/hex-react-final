@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
-import { signIn, setAuthToken } from "../api/functions";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { signIn } from "../api/functions";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState({
     username: "",
     password: "",
   });
+  const [loginState, setLoginState] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -13,19 +16,18 @@ const Login = () => {
   };
 
   const submit = async () => {
-    const res = await signIn(data);
-    const { token, expired } = res.data;
-    document.cookie = `hexToken=${token}; expires=${new Date(expired)}`;
+    try {
+      const res = await signIn(data);
+      const { token, expired } = res.data;
+      document.cookie = `hexToken=${token}; expires=${new Date(expired)}`;
+
+      if (res.data.success) {
+        navigate("/admin/products");
+      }
+    } catch (error) {
+      setLoginState(error.response.data);
+    }
   };
-
-  useEffect(() => {
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("hexToken="))
-      ?.split("=")[1];
-
-    setAuthToken(token);
-  }, []);
 
   return (
     <div className="container py-5">
@@ -33,8 +35,13 @@ const Login = () => {
         <div className="col-md-6">
           <h2>登入帳號</h2>
 
-          <div className="alert alert-danger" role="alert">
-            錯誤訊息
+          <div
+            className={`alert alert-danger ${
+              loginState.message ? "d-block" : "d-none"
+            }`}
+            role="alert"
+          >
+            {loginState.message}
           </div>
           <div className="mb-2">
             <label htmlFor="email" className="form-label w-100">
