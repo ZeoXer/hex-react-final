@@ -44,3 +44,13 @@ export const addNewProduct = (product) => {
     },
   });
 };
+
+export const editProductById = (id, product) => {
+  return service({
+    url: `/v2/api/${API_PATH}/admin/product/${id}`,
+    method: "put",
+    data: {
+      data: product,
+    },
+  });
+};
