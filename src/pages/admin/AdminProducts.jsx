@@ -3,6 +3,7 @@ import { deleteProductById, getAdminProducts } from "../../api/functions";
 import { Modal } from "bootstrap";
 import ProductModal from "../../components/ProductModal";
 import DeleteModal from "../../components/DeleteModal";
+import Pagination from "../../components/Pagination";
 
 const CREATE_PRODUCT = "create-product";
 const EDIT_PRODUCT = "edit-product";
@@ -28,8 +29,8 @@ const AdminProducts = () => {
     fetchProducts();
   }, []);
 
-  const fetchProducts = async () => {
-    const productRes = await getAdminProducts();
+  const fetchProducts = async (page) => {
+    const productRes = await getAdminProducts(page);
     setProducts(productRes.data.products);
     setPagination(productRes.data.pagination);
   };
@@ -128,36 +129,7 @@ const AdminProducts = () => {
           })}
         </tbody>
       </table>
-
-      <nav aria-label="Page navigation example">
-        <ul className="pagination">
-          <li className="page-item">
-            <a className="page-link disabled" href="/" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          {[...new Array(pagination.total_pages)].map((_, i) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <li className="page-item" key={`${i}_page`}>
-              <a
-                className={`page-link ${i + 1 === 1 && "active"}`}
-                href="/"
-                onClick={(e) => {
-                  e.preventDefault();
-                  fetchProducts(i + 1);
-                }}
-              >
-                {i + 1}
-              </a>
-            </li>
-          ))}
-          <li className="page-item">
-            <a className="page-link" href="/" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+      <Pagination pagination={pagination} changePage={fetchProducts} />
     </div>
   );
 };
