@@ -21,9 +21,9 @@ export const checkToken = () => {
   });
 };
 
-export const getAdminProducts = () => {
+export const getAdminProducts = (page = 1) => {
   return service({
-    url: `/v2/api/${API_PATH}/admin/products`,
+    url: `/v2/api/${API_PATH}/admin/products?page=${page}`,
     method: "get",
   });
 };
@@ -52,5 +52,12 @@ export const editProductById = (id, product) => {
     data: {
       data: product,
     },
+  });
+};
+
+export const deleteProductById = (id) => {
+  return service({
+    url: `/v2/api/${API_PATH}/admin/product/${id}`,
+    method: "delete",
   });
 };
