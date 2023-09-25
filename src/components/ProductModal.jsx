@@ -42,13 +42,16 @@ const ProductModal = ({
 
   const submit = async () => {
     try {
+      let res;
       if (type === CREATE_PRODUCT) {
-        await addNewProduct(tempData);
+        res = await addNewProduct(tempData);
       } else if (type === EDIT_PRODUCT) {
-        await editProductById(tempProduct.id, tempData);
+        res = await editProductById(tempProduct.id, tempData);
       }
-      closeProductModal();
-      fetchProducts();
+      if (res.data.success) {
+        closeProductModal();
+        fetchProducts();
+      }
     } catch (error) {
       console.log(error);
     }
