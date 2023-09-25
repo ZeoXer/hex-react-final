@@ -14,9 +14,33 @@ export const setAuthToken = (token) => {
   service.defaults.headers.common["Authorization"] = token;
 };
 
-export const getAllProducts = () => {
+export const checkToken = () => {
   return service({
-    url: `/v2/api/${API_PATH}/products/all`,
+    url: "/v2/api/user/check",
+    method: "post",
+  });
+};
+
+export const getAdminProducts = () => {
+  return service({
+    url: `/v2/api/${API_PATH}/admin/products`,
     method: "get",
+  });
+};
+
+export const getAdminAllProducts = () => {
+  return service({
+    url: `/v2/api/${API_PATH}/admin/products/all`,
+    method: "get",
+  });
+};
+
+export const addNewProduct = (product) => {
+  return service({
+    url: `/v2/api/${API_PATH}/admin/product`,
+    method: "post",
+    data: {
+      data: product,
+    },
   });
 };
