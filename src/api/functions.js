@@ -2,6 +2,9 @@ import service from "./axios";
 
 const API_PATH = import.meta.env.VITE_API_PATH;
 
+// api docs: https://hexschool.github.io/ec-courses-api-swaggerDoc
+
+// basics
 export const signIn = (data) => {
   return service({
     url: "/v2/admin/signin",
@@ -21,6 +24,7 @@ export const checkToken = () => {
   });
 };
 
+// admin products
 export const getAdminProducts = (page = 1) => {
   return service({
     url: `/v2/api/${API_PATH}/admin/products?page=${page}`,
@@ -58,6 +62,41 @@ export const editProductById = (id, product) => {
 export const deleteProductById = (id) => {
   return service({
     url: `/v2/api/${API_PATH}/admin/product/${id}`,
+    method: "delete",
+  });
+};
+
+// admin coupons
+export const getAdminCoupons = (page = 1) => {
+  return service({
+    url: `/v2/api/${API_PATH}/admin/coupons?page=${page}`,
+    method: "get",
+  });
+};
+
+export const addNewCoupon = (coupon) => {
+  return service({
+    url: `/v2/api/${API_PATH}/admin/coupon`,
+    method: "post",
+    data: {
+      data: coupon,
+    },
+  });
+};
+
+export const editCouponById = (id, coupon) => {
+  return service({
+    url: `/v2/api/${API_PATH}/admin/coupon/${id}`,
+    method: "put",
+    data: {
+      data: coupon,
+    },
+  });
+};
+
+export const deleteCouponById = (id) => {
+  return service({
+    url: `/v2/api/${API_PATH}/admin/coupon/${id}`,
     method: "delete",
   });
 };
