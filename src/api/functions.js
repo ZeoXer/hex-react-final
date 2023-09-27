@@ -74,22 +74,28 @@ export const getAdminCoupons = (page = 1) => {
   });
 };
 
-export const addNewCoupon = (coupon) => {
+export const addNewCoupon = (coupon, date) => {
   return service({
     url: `/v2/api/${API_PATH}/admin/coupon`,
     method: "post",
     data: {
-      data: coupon,
+      data: {
+        ...coupon,
+        due_date: date.getTime(),
+      },
     },
   });
 };
 
-export const editCouponById = (id, coupon) => {
+export const editCouponById = (id, coupon, date) => {
   return service({
     url: `/v2/api/${API_PATH}/admin/coupon/${id}`,
     method: "put",
     data: {
-      data: coupon,
+      data: {
+        ...coupon,
+        due_date: date.getTime(),
+      },
     },
   });
 };
