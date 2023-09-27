@@ -66,12 +66,21 @@ const AdminCoupons = () => {
     }
   };
 
+  const getFormalDateString = (date) => {
+    let dates = date.toLocaleDateString().split("/");
+    for (let i = 1; i <= 2; i++) {
+      dates[i] = dates[i].padStart(2, "0");
+    }
+    return dates.reduce((a, b) => a + "-" + b);
+  };
+
   return (
     <div className="p-3">
       <CouponModal
         closeCouponModal={closeCouponModal}
         fetchCoupons={fetchCoupons}
-        tempProduct={tempCoupon}
+        getFormalDateString={getFormalDateString}
+        tempCoupon={tempCoupon}
         type={type}
       />
       <DeleteModal
@@ -106,7 +115,7 @@ const AdminCoupons = () => {
               <tr key={coupon.id}>
                 <td>{coupon.title}</td>
                 <td>{coupon.percent}</td>
-                <td>{coupon.due_date}</td>
+                <td>{getFormalDateString(new Date(coupon.due_date))}</td>
                 <td>{coupon.is_enabled ? "啟用" : "未啟用"}</td>
                 <td>
                   <button

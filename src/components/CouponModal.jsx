@@ -4,26 +4,35 @@ import { addNewCoupon, editCouponById } from "../api/functions";
 const CREATE_COUPON = "create-coupon";
 const EDIT_COUPON = "edit-coupon";
 
-const CouponModal = ({ closeCouponModal, fetchCoupons, tempCoupon, type }) => {
+const CouponModal = ({
+  closeCouponModal,
+  fetchCoupons,
+  getFormalDateString,
+  tempCoupon,
+  type,
+}) => {
   const [tempData, setTempData] = useState({
     title: "",
     is_enabled: 0,
-    percent: 0,
-    due_date: 1555459200,
+    percent: 100,
+    due_date: 0,
     code: "",
   });
+  const [date, setDate] = useState(new Date());
 
   useEffect(() => {
     if (type === CREATE_COUPON) {
       setTempData({
         title: "",
         is_enabled: 0,
-        percent: 0,
-        due_date: 1555459200,
+        percent: 100,
+        due_date: 0,
         code: "",
       });
+      setDate(new Date())
     } else if (type === EDIT_COUPON) {
       setTempData(tempCoupon);
+      setDate(new Date(tempCoupon.due_date))
     }
   }, [type, tempCoupon]);
 
@@ -31,9 +40,9 @@ const CouponModal = ({ closeCouponModal, fetchCoupons, tempCoupon, type }) => {
     try {
       let res;
       if (type === CREATE_COUPON) {
-        res = await addNewCoupon(tempData);
+        res = await addNewCoupon(tempData, date);
       } else if (type === EDIT_COUPON) {
-        res = await editCouponById(tempCoupon.id, tempData);
+        res = await editCouponById(tempCoupon.id, tempData, date);
       }
       if (res.data.success) {
         closeCouponModal();
@@ -69,7 +78,7 @@ const CouponModal = ({ closeCouponModal, fetchCoupons, tempCoupon, type }) => {
           <div className="modal-header">
             <h1 className="modal-title fs-5" id="exampleModalLabel">
               {type === CREATE_COUPON && "建立新優惠券"}
-              {type === EDIT_COUPON && `編輯 ${tempData.title}`}
+              {type === EDIT_COUPON && `編輯 ${tempCoupon.title}`}
             </h1>
             <button
               type="button"
@@ -98,9 +107,10 @@ const CouponModal = ({ closeCouponModal, fetchCoupons, tempCoupon, type }) => {
                 <label className="w-100" htmlFor="percent">
                   折扣（%）
                   <input
-                    type="text"
+                    type="number"
                     name="percent"
                     id="percent"
+                    max={100}
                     placeholder="請輸入折扣（%）"
                     className="form-control mt-1"
                     value={tempData.percent}
@@ -115,8 +125,13 @@ const CouponModal = ({ closeCouponModal, fetchCoupons, tempCoupon, type }) => {
                     type="date"
                     id="due_date"
                     name="due_date"
+                    min={getFormalDateString(new Date())}
                     placeholder="請輸入到期日"
                     className="form-control mt-1"
+                    value={getFormalDateString(date)}
+                    onChange={(e) => {
+                      setDate(new Date(e.target.value));
+                    }}
                   />
                 </label>
               </div>
