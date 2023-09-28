@@ -1,6 +1,7 @@
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { checkToken, setAuthToken } from "../../api/functions";
+import Message from "../../components/Message";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ const Dashboard = () => {
 
   return (
     <>
+      <Message />
       <nav className="navbar navbar-expand-lg bg-dark">
         <div className="container-fluid">
           <p className="text-white mb-0">HEX EATS 後台管理系統</p>
