@@ -1,21 +1,11 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { MessageContext } from "../store/messsage";
 
 const Message = () => {
-  const [message, setMessage] = useState({});
+  const [message] = useContext(MessageContext);
 
   return (
     <>
-      <button
-        onClick={() => {
-          setMessage({
-            type: "danger",
-            title: "成功",
-            text: "這是一段成功的訊息",
-          });
-        }}
-      >
-        按我
-      </button>
       <div
         className="toast-container position-fixed"
         style={{ top: "50px", right: "10px" }}

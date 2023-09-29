@@ -1,10 +1,16 @@
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useReducer } from "react";
 import { checkToken, setAuthToken } from "../../api/functions";
 import Message from "../../components/Message";
+import {
+  MessageContext,
+  initState,
+  messageReducer,
+} from "../../store/messsage";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const reducer = useReducer(messageReducer, initState);
 
   const logOut = () => {
     document.cookie = "hexToken=;";
@@ -35,7 +41,7 @@ const Dashboard = () => {
   }, [navigate, token]);
 
   return (
-    <>
+    <MessageContext.Provider value={reducer}>
       <Message />
       <nav className="navbar navbar-expand-lg bg-dark">
         <div className="container-fluid">
@@ -97,7 +103,7 @@ const Dashboard = () => {
         </div>
         <div className="w-100">{token && <Outlet />}</div>
       </div>
-    </>
+    </MessageContext.Provider>
   );
 };
 

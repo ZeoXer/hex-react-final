@@ -1,5 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { addNewProduct, editProductById } from "../api/functions";
+import {
+  MessageContext,
+  handleSuccessMessage,
+  handleFailMessage,
+} from "../store/messsage";
 
 const CREATE_PRODUCT = "create-product";
 const EDIT_PRODUCT = "edit-product";
@@ -21,6 +26,7 @@ const ProductModal = ({
     is_enabled: 0,
     imageUrl: "",
   });
+  const [, dispatch] = useContext(MessageContext);
 
   useEffect(() => {
     if (type === CREATE_PRODUCT) {
@@ -49,11 +55,12 @@ const ProductModal = ({
         res = await editProductById(tempProduct.id, tempData);
       }
       if (res.data.success) {
+        handleSuccessMessage(dispatch, res);
         closeProductModal();
         fetchProducts();
       }
     } catch (error) {
-      console.log(error);
+      handleFailMessage(error, dispatch);
     }
   };
 
