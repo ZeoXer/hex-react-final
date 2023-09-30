@@ -45,8 +45,8 @@ const AdminCoupons = () => {
     couponModal.current.hide();
   };
 
-  const openDeleteModal = (product) => {
-    setTempCoupon(product);
+  const openDeleteModal = (coupon) => {
+    setTempCoupon(coupon);
     deleteModal.current.show();
   };
 
