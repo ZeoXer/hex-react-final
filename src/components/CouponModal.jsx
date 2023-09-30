@@ -1,10 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { addNewCoupon, editCouponById } from "../api/functions";
-import {
-  MessageContext,
-  handleFailMessage,
-  handleSuccessMessage,
-} from "../store/messsage";
+import { MessageContext } from "../store/message";
 
 const CREATE_COUPON = "create-coupon";
 const EDIT_COUPON = "edit-coupon";
@@ -24,7 +20,8 @@ const CouponModal = ({
     code: "",
   });
   const [date, setDate] = useState(new Date());
-  const [, dispatch] = useContext(MessageContext);
+  const { handleSuccessMessage, handleFailMessage } =
+    useContext(MessageContext);
 
   useEffect(() => {
     if (type === CREATE_COUPON) {
@@ -51,12 +48,12 @@ const CouponModal = ({
         res = await editCouponById(tempCoupon.id, tempData, date);
       }
       if (res.data.success) {
-        handleSuccessMessage(dispatch, res);
+        handleSuccessMessage(res);
         closeCouponModal();
         fetchCoupons();
       }
     } catch (error) {
-      handleFailMessage(error, dispatch);
+      handleFailMessage(error);
     }
   };
 
