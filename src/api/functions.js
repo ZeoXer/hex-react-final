@@ -106,3 +106,20 @@ export const deleteCouponById = (id) => {
     method: "delete",
   });
 };
+
+// admin orders
+export const getAdminOrders = (page = 1) => {
+  return service({
+    url: `/v2/api/${API_PATH}/admin/orders?page=${page}`,
+    method: "get",
+  });
+};
+
+export const editOrderById = (id, order) => {
+  return service({
+    url: `/v2/api/${API_PATH}/admin/order/${id}`,
+    data: {
+      ...order,
+    },
+  });
+};
