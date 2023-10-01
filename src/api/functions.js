@@ -123,3 +123,11 @@ export const editOrderById = (id, order) => {
     },
   });
 };
+
+// customer products
+export const getProducts = (page = 1) => {
+  return service({
+    url: `/v2/api/${API_PATH}/products?page=${page}`,
+    method: "get",
+  });
+};
