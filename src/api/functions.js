@@ -131,3 +131,10 @@ export const getProducts = (page = 1) => {
     method: "get",
   });
 };
+
+export const getProduct = (id) => {
+  return service({
+    url: `/v2/api/${API_PATH}/product/${id}`,
+    method: "get",
+  });
+};
