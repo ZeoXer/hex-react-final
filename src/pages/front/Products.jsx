@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getProducts } from "../../api/functions";
 import Pagination from "../../components/Pagination";
 
@@ -31,7 +32,7 @@ const Products = () => {
                 />
                 <div className="card-body p-0">
                   <h4 className="mb-0 mt-2">
-                    <a href="#">{product.title}</a>
+                    <Link to={`/product/${product.id}`}>{product.title}</Link>
                   </h4>
                   <p className="card-text text-muted mb-0">{product.content}</p>
                   <p className="text-muted mt-3">NT$ {product.price}</p>
