@@ -1,17 +1,24 @@
 import { NavLink } from "react-router-dom";
+import Logo from "../images/logo.png";
 
 const NavBar = () => {
   return (
     <div className="bg-white sticky-top">
       <div className="container">
-        <nav className="navbar px-0 navbar-expand-lg navbar-light bg-white">
+        <nav className="navbar px-0 py-4 navbar-expand-lg navbar-light bg-white">
           <NavLink
-            className="navbar-brand position-absolute"
+            className="navbar-brand position-absolute m-0 p-0"
             to="/"
             style={{
               left: "50%",
               transform: "translate(-50%, -50%)",
               top: "50%",
+              backgroundImage: `url("${Logo}")`,
+              backgroundSize: "cover",
+              width: "100px",
+              height: "75px",
+              textIndent: "110%",
+              overflow: "hidden",
             }}
           >
             KeyInLife
