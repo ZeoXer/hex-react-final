@@ -149,3 +149,10 @@ export const addProductToCart = (product) => {
     },
   });
 };
+
+export const getCartProducts = () => {
+  return service({
+    url: `/v2/api/${API_PATH}/cart`,
+    method: "get",
+  });
+};
