@@ -138,3 +138,14 @@ export const getProduct = (id) => {
     method: "get",
   });
 };
+
+// cart
+export const addProductToCart = (product) => {
+  return service({
+    url: `/v2/api/${API_PATH}/cart`,
+    method: "post",
+    data: {
+      data: product,
+    },
+  });
+};
