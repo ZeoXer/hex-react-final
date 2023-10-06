@@ -1,14 +1,33 @@
 import { useEffect, useState } from "react";
-import { getProduct } from "../../api/functions";
+import { addProductToCart, getProduct } from "../../api/functions";
 import { useParams } from "react-router-dom";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState({});
+  const [cartQuantity, setCartQuantity] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
 
   const fetchProduct = async (id) => {
     const res = await getProduct(id);
     setProduct(res.data.product);
+  };
+
+  const addToCart = async () => {
+    const productToAdd = {
+      product_id: product.id,
+      qty: cartQuantity,
+    };
+    setIsLoading(true);
+
+    try {
+      const res = await addProductToCart(productToAdd);
+      console.log(res);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -30,15 +49,9 @@ const ProductDetail = () => {
           <p className="fw-bold">NT$ {product.price}</p>
           <p>{product.content}</p>
           <div className="my-4">
-            <img src={product.imageUrl} alt="" className="img-fluid mt-4" />
             <img
-              src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80"
-              alt=""
-              className="img-fluid mt-4"
-            />
-            <img
-              src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80"
-              alt=""
+              src={product.imageUrl}
+              alt={product.title}
               className="img-fluid mt-4"
             />
           </div>
@@ -55,7 +68,7 @@ const ProductDetail = () => {
               >
                 <div className="d-flex justify-content-between align-items-center pe-1">
                   <h4 className="mb-0">Lorem ipsum</h4>
-                  <i className="fas fa-minus"></i>
+                  <i className="bi bi-dash"></i>
                 </div>
               </div>
               <div
@@ -81,7 +94,7 @@ const ProductDetail = () => {
               >
                 <div className="d-flex justify-content-between align-items-center pe-1">
                   <h4 className="mb-0">Lorem ipsum</h4>
-                  <i className="fas fa-plus"></i>
+                  <i className="bi bi-plus"></i>
                 </div>
               </div>
               <div
@@ -107,7 +120,7 @@ const ProductDetail = () => {
               >
                 <div className="d-flex justify-content-between align-items-center pe-1">
                   <h4 className="mb-0">Lorem ipsum</h4>
-                  <i className="fas fa-plus"></i>
+                  <i className="bi bi-plus"></i>
                 </div>
               </div>
               <div
@@ -133,34 +146,44 @@ const ProductDetail = () => {
                 className="btn btn-outline-dark rounded-0 border-0 py-3"
                 type="button"
                 id="button-addon1"
+                onClick={() => {
+                  setCartQuantity(
+                    cartQuantity > 1 ? cartQuantity - 1 : cartQuantity
+                  );
+                }}
               >
-                <i className="fas fa-minus"></i>
+                <i className="bi bi-dash"></i>
               </button>
             </div>
             <input
-              type="text"
+              type="number"
               className="form-control border-0 text-center my-auto shadow-none"
               placeholder=""
-              aria-label="Example text with button addon"
+              aria-label="number of product"
               aria-describedby="button-addon1"
-              value="1"
+              value={cartQuantity}
+              readOnly
             />
             <div className="input-group-append">
               <button
                 className="btn btn-outline-dark rounded-0 border-0 py-3"
                 type="button"
                 id="button-addon2"
+                onClick={() => {
+                  setCartQuantity(cartQuantity + 1);
+                }}
               >
-                <i className="fas fa-plus"></i>
+                <i className="bi bi-plus"></i>
               </button>
             </div>
           </div>
-          <a
-            href="./checkout.html"
-            className="btn btn-dark btn-block rounded-0 py-3"
+          <button
+            className="btn btn-dark w-100 rounded-0 py-3"
+            onClick={addToCart}
+            disabled={isLoading}
           >
-            Lorem ipsum
-          </a>
+            加入購物車
+          </button>
         </div>
       </div>
     </div>
