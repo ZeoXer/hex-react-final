@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { addProductToCart, getProduct } from "../../api/functions";
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState({});
   const [cartQuantity, setCartQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
+  const { fetchCart } = useOutletContext();
 
   const fetchProduct = async (id) => {
     const res = await getProduct(id);
@@ -23,6 +24,7 @@ const ProductDetail = () => {
     try {
       const res = await addProductToCart(productToAdd);
       console.log(res);
+      fetchCart();
       setIsLoading(false);
     } catch (error) {
       console.log(error);

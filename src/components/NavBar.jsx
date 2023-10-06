@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import Logo from "../images/logo.png";
 
-const NavBar = () => {
+const NavBar = ({ cartData }) => {
   return (
     <div className="bg-white sticky-top">
       <div className="container">
@@ -45,8 +45,11 @@ const NavBar = () => {
             </ul>
           </div>
           <div className="d-flex">
-            <NavLink className="nav-link" to="/cart">
-              <i className="bi bi-cart-fill"></i>
+            <NavLink className="nav-link position-relative" to="/cart">
+              <i className="bi bi-cart-fill fs-4"></i>
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {cartData?.carts?.length}
+              </span>
             </NavLink>
           </div>
         </nav>
