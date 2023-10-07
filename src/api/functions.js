@@ -163,3 +163,13 @@ export const deleteCartProduct = (id) => {
     method: "delete",
   });
 };
+
+export const updateCartProductAmount = (id, product) => {
+  return service({
+    url: `/v2/api/${API_PATH}/cart/${id}`,
+    method: "put",
+    data: {
+      data: product,
+    },
+  });
+};
