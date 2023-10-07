@@ -156,3 +156,10 @@ export const getCartProducts = () => {
     method: "get",
   });
 };
+
+export const deleteCartProduct = (id) => {
+  return service({
+    url: `/v2/api/${API_PATH}/cart/${id}`,
+    method: "delete",
+  });
+};
