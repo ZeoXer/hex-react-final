@@ -1,13 +1,37 @@
 import { useOutletContext } from "react-router-dom";
-import { deleteCartProduct } from "../../api/functions";
+import { useState } from "react";
+import {
+  deleteCartProduct,
+  updateCartProductAmount,
+} from "../../api/functions";
 
 const Cart = () => {
   const { cartData, fetchCart } = useOutletContext();
+  const [loadingItems, setLoadingItems] = useState([]);
 
   const removeCartItem = async (id) => {
     try {
       const res = await deleteCartProduct(id);
       console.log(res);
+      fetchCart();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateCartItem = async (item, quantity) => {
+    const data = {
+      product_id: item.product_id,
+      qty: quantity,
+    };
+    setLoadingItems([...loadingItems, item.id]);
+
+    try {
+      const res = await updateCartProductAmount(item.id, data);
+      console.log(res);
+      setLoadingItems(
+        loadingItems.filter((loadingItem) => loadingItem.id !== item.id)
+      );
       fetchCart();
     } catch (error) {
       console.log(error);
@@ -52,25 +76,22 @@ const Cart = () => {
                   </p>
                   <div className="d-flex justify-content-between align-items-center w-100">
                     <div className="input-group w-50 align-items-center">
-                      <div className="input-group-prepend pe-1">
-                        <a href="#">
-                          {" "}
-                          <i className="fas fa-minus"></i>
-                        </a>
-                      </div>
-                      <input
-                        type="number"
-                        className="form-control border-0 text-center my-auto shadow-none bg-light px-0"
-                        placeholder=""
-                        aria-label="Example text with button addon"
-                        aria-describedby="button-addon1"
+                      <select
+                        className="form-select"
                         value={item.qty}
-                      />
-                      <div className="input-group-append ps-1">
-                        <a href="#">
-                          <i className="fas fa-plus"></i>
-                        </a>
-                      </div>
+                        disabled={loadingItems.includes(item.id)}
+                        onChange={(e) => {
+                          updateCartItem(item, +e.target.value);
+                        }}
+                      >
+                        {[...new Array(10)].map((_, num) => {
+                          return (
+                            <option key={num + 1} value={num + 1}>
+                              {num + 1}
+                            </option>
+                          );
+                        })}
+                      </select>
                     </div>
                     <p className="mb-0 ms-auto">NT$ {item.final_total}</p>
                   </div>
