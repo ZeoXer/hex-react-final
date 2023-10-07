@@ -7,10 +7,8 @@ const FrontLayout = () => {
   const [cartData, setCartData] = useState({});
 
   const fetchCart = async () => {
-    const res = await getCartProducts();
-
     try {
-      console.log(res);
+      const res = await getCartProducts();
       setCartData(res.data.data);
     } catch (error) {
       console.log(error);
@@ -24,7 +22,7 @@ const FrontLayout = () => {
   return (
     <>
       <NavBar cartData={cartData} />
-      <Outlet context={{ fetchCart }} />
+      <Outlet context={{ fetchCart, cartData }} />
       <div className="bg-dark">
         <div className="container">
           <div className="d-flex align-items-center justify-content-between text-white py-4">

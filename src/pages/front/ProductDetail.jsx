@@ -22,8 +22,8 @@ const ProductDetail = () => {
     setIsLoading(true);
 
     try {
-      const res = await addProductToCart(productToAdd);
-      console.log(res);
+      const res= await addProductToCart(productToAdd);
+      console.log(res)
       fetchCart();
       setIsLoading(false);
     } catch (error) {
