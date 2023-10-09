@@ -8,7 +8,7 @@ const Message = () => {
     <>
       <div
         className="toast-container position-fixed"
-        style={{ top: "50px", right: "10px" }}
+        style={{ bottom: "50px", right: "10px" }}
       >
         {message.title && (
           <div

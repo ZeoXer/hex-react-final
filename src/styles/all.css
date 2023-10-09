@@ -1,7 +1,19 @@
 @charset "UTF-8";
-.object-fit {
+.object-cover {
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.zoom-in-container {
+  overflow: hidden;
+}
+
+.zoom-in {
+  transition: all 0.4s;
+}
+
+.zoom-in:hover {
+  transform: scale(1.2);
 }
 
 /*!

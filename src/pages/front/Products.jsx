@@ -23,19 +23,31 @@ const Products = () => {
         {products.map((product) => {
           return (
             <div className="col-md-3" key={product.id}>
-              <div className="card border-0 mb-4 position-relative position-relative">
-                <img
-                  src={product.imageUrl}
-                  className="card-img-top rounded-0 object-cover"
-                  height={300}
-                  alt={product.title}
-                />
+              <div className="card border-0 mb-4 position-relative">
+                <Link
+                  to={`/product/${product.id}`}
+                  className="zoom-in-container"
+                >
+                  <img
+                    src={product.imageUrl}
+                    className="card-img-top rounded-0 object-cover zoom-in"
+                    height={300}
+                    alt={product.title}
+                  />
+                </Link>
                 <div className="card-body p-0">
                   <h4 className="mb-0 mt-2">
-                    <Link to={`/product/${product.id}`}>{product.title}</Link>
+                    <Link
+                      to={`/product/${product.id}`}
+                      className="text-decoration-none"
+                    >
+                      {product.title}
+                    </Link>
                   </h4>
-                  <p className="card-text text-muted mb-0">{product.description}</p>
-                  <p className="text-muted mt-3">NT$ {product.price}</p>
+                  <p className="card-text text-muted mb-0">
+                    {product.description}
+                  </p>
+                  <p className="text-muted mt-3 fs-5 fw-bold">NT$ {product.price}</p>
                 </div>
               </div>
             </div>

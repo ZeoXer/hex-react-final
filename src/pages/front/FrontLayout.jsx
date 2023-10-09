@@ -29,7 +29,7 @@ const FrontLayout = () => {
       <div className="bg-dark">
         <div className="container">
           <div className="d-flex align-items-center justify-content-between text-white py-4">
-            <p className="mb-0">© 2020 LOGO All Rights Reserved.</p>
+            <p className="mb-0">© 本網站僅做學習用途，不牽涉任何商業行為</p>
             <ul className="d-flex list-unstyled mb-0 h4">
               <li>
                 <a href="#" className="text-white mx-3">
