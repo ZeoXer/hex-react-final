@@ -1,21 +1,24 @@
 import { useOutletContext } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   deleteCartProduct,
   updateCartProductAmount,
 } from "../../api/functions";
+import { MessageContext } from "../../store/message";
 
 const Cart = () => {
   const { cartData, fetchCart } = useOutletContext();
   const [loadingItems, setLoadingItems] = useState([]);
+  const { handleSuccessMessage, handleFailMessage } =
+    useContext(MessageContext);
 
   const removeCartItem = async (id) => {
     try {
       const res = await deleteCartProduct(id);
-      console.log(res);
+      handleSuccessMessage(res)
       fetchCart();
     } catch (error) {
-      console.log(error);
+      handleFailMessage(error)
     }
   };
 

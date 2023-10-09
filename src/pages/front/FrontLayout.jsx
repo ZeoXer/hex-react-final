@@ -2,6 +2,8 @@ import { Outlet } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 import { useState, useEffect } from "react";
 import { getCartProducts } from "../../api/functions";
+import Message from "../../components/Message";
+import { MessageContextProvider } from "../../store/message";
 
 const FrontLayout = () => {
   const [cartData, setCartData] = useState({});
@@ -20,7 +22,8 @@ const FrontLayout = () => {
   }, []);
 
   return (
-    <>
+    <MessageContextProvider>
+      <Message />
       <NavBar cartData={cartData} />
       <Outlet context={{ fetchCart, cartData }} />
       <div className="bg-dark">
@@ -47,7 +50,7 @@ const FrontLayout = () => {
           </div>
         </div>
       </div>
-    </>
+    </MessageContextProvider>
   );
 };
 

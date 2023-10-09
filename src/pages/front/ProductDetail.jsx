@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { addProductToCart, getProduct } from "../../api/functions";
 import { useOutletContext, useParams } from "react-router-dom";
+import { MessageContext } from "../../store/message";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState({});
@@ -8,6 +9,8 @@ const ProductDetail = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
   const { fetchCart } = useOutletContext();
+  const { handleSuccessMessage, handleFailMessage } =
+    useContext(MessageContext);
 
   const fetchProduct = async (id) => {
     const res = await getProduct(id);
@@ -22,12 +25,12 @@ const ProductDetail = () => {
     setIsLoading(true);
 
     try {
-      const res= await addProductToCart(productToAdd);
-      console.log(res)
+      const res = await addProductToCart(productToAdd);
+      handleSuccessMessage(res);
       fetchCart();
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      handleFailMessage(error);
       setIsLoading(false);
     }
   };
