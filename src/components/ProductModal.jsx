@@ -122,7 +122,13 @@ const ProductModal = ({
                     />
                   </label>
                 </div> */}
-                <img src={tempData.imageUrl} alt="上傳的圖片" className="img-fluid" />
+                {tempData.imageUrl && (
+                  <img
+                    src={tempData.imageUrl}
+                    alt="上傳的圖片"
+                    className="img-fluid"
+                  />
+                )}
               </div>
               <div className="col-sm-8">
                 <div className="form-group mb-2">

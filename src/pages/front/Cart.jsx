@@ -59,7 +59,7 @@ const Cart = () => {
                   alt={item.title}
                   className="object-cover"
                   style={{
-                    width: "120px",
+                    width: "200px",
                   }}
                 />
                 <div className="w-100 p-3 position-relative">
@@ -75,7 +75,7 @@ const Cart = () => {
                   </button>
                   <p className="mb-0 fw-bold">{item.product.title}</p>
                   <p className="mb-1 text-muted" style={{ fontSize: "14px" }}>
-                    {item.product.content}
+                    {item.product.description}
                   </p>
                   <div className="d-flex justify-content-between align-items-center w-100">
                     <div className="input-group w-50 align-items-center">

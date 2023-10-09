@@ -46,6 +46,7 @@ const ProductDetail = () => {
           minHeight: "400px",
           backgroundImage: `url(${product.imageUrl})`,
           backgroundPosition: "center center",
+          backgroundRepeat: "no-repeat"
         }}
       ></div>
       <div className="row justify-content-between mt-4 mb-7">
