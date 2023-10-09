@@ -34,7 +34,7 @@ const Products = () => {
                   <h4 className="mb-0 mt-2">
                     <Link to={`/product/${product.id}`}>{product.title}</Link>
                   </h4>
-                  <p className="card-text text-muted mb-0">{product.content}</p>
+                  <p className="card-text text-muted mb-0">{product.description}</p>
                   <p className="text-muted mt-3">NT$ {product.price}</p>
                 </div>
               </div>
