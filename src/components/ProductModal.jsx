@@ -107,10 +107,12 @@ const ProductModal = ({
                       id="image"
                       placeholder="請輸入圖片連結"
                       className="form-control"
+                      onChange={handleChange}
+                      value={tempData.imageUrl}
                     />
                   </label>
                 </div>
-                <div className="form-group mb-2">
+                {/* <div className="form-group mb-2">
                   <label className="w-100" htmlFor="customFile">
                     或 上傳圖片
                     <input
@@ -119,8 +121,8 @@ const ProductModal = ({
                       className="form-control"
                     />
                   </label>
-                </div>
-                <img src="" alt="" className="img-fluid" />
+                </div> */}
+                <img src={tempData.imageUrl} alt="上傳的圖片" className="img-fluid" />
               </div>
               <div className="col-sm-8">
                 <div className="form-group mb-2">
