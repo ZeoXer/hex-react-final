@@ -4,6 +4,7 @@ import {
   deleteCartProduct,
   updateCartProductAmount,
 } from "../../api/functions";
+import { Link } from "react-router-dom";
 import { MessageContext } from "../../store/message";
 
 const Cart = () => {
@@ -15,10 +16,10 @@ const Cart = () => {
   const removeCartItem = async (id) => {
     try {
       const res = await deleteCartProduct(id);
-      handleSuccessMessage(res)
+      handleSuccessMessage(res);
       fetchCart();
     } catch (error) {
-      handleFailMessage(error)
+      handleFailMessage(error);
     }
   };
 
@@ -125,7 +126,12 @@ const Cart = () => {
             <p className="mb-0 h4 fw-bold">Lorem ipsum</p>
             <p className="mb-0 h4 fw-bold">NT$ {cartData.final_total}</p>
           </div>
-          <a className="btn btn-dark w-100 mt-4 rounded-0 py-3">前往結帳</a>
+          <Link
+            to="/checkout"
+            className="btn btn-dark w-100 mt-4 rounded-0 py-3"
+          >
+            前往結帳
+          </Link>
         </div>
       </div>
     </div>

@@ -156,7 +156,7 @@ const Checkout = () => {
                   src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80"
                   alt=""
                   className="me-2"
-                  style="width: 48px; height: 48px; object-fit: cover"
+                  style={{ width: "48px", height: "48px", objectFit: "cover" }}
                 />
                 <div className="w-100">
                   <div className="d-flex justify-content-between fw-bold">
@@ -176,7 +176,7 @@ const Checkout = () => {
                   src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80"
                   alt=""
                   className="me-2"
-                  style="width: 48px; height: 48px; object-fit: cover"
+                  style={{ width: "48px", height: "48px", objectFit: "cover" }}
                 />
                 <div className="w-100">
                   <div className="d-flex justify-content-between fw-bold">
