@@ -173,3 +173,14 @@ export const updateCartProductAmount = (id, product) => {
     },
   });
 };
+
+// checkout
+export const checkoutOrder = (form) => {
+  return service({
+    url: `/v2/api/${API_PATH}/order`,
+    method: "post",
+    data: {
+      data: form,
+    },
+  });
+};
