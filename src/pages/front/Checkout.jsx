@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Input } from "../../components/FormComponents";
 import { checkoutOrder } from "../../api/functions";
@@ -12,6 +12,8 @@ const Checkout = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: "onTouched" });
+
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     const { name, email, tel, address } = data;
@@ -26,7 +28,7 @@ const Checkout = () => {
     };
 
     const res = await checkoutOrder(form);
-    console.log(res);
+    navigate(`/success/${res.data.orderId}`);
   };
 
   return (
