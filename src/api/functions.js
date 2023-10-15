@@ -184,3 +184,10 @@ export const checkoutOrder = (form) => {
     },
   });
 };
+
+export const getOrderById = (id) => {
+  return service({
+    url: `/v2/api/${API_PATH}/order/${id}`,
+    method: "get",
+  });
+};
