@@ -3,11 +3,13 @@ import OrderModal from "../../components/OrderModal";
 import Pagination from "../../components/Pagination";
 import { Modal } from "bootstrap";
 import { getAdminOrders } from "../../api/functions";
+import { LoadingFullScreen } from "../../components/Loadings";
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
   const [tempOrder, setTempOrder] = useState({});
   const [pagination, setPagination] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const orderModal = useRef();
 
@@ -20,10 +22,12 @@ const AdminOrders = () => {
   }, []);
 
   const fetchOrders = async (page) => {
+    setIsLoading(true);
     const res = await getAdminOrders(page);
 
     setOrders(res.data.orders);
     setPagination(res.data.pagination);
+    setIsLoading(false);
   };
 
   const openOrderModal = (order) => {
@@ -37,6 +41,7 @@ const AdminOrders = () => {
 
   return (
     <div className="p-3">
+      {isLoading && <LoadingFullScreen />}
       <OrderModal
         closeProductModal={closeOrderModal}
         fetchOrders={fetchOrders}

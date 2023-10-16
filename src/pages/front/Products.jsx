@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getProducts } from "../../api/functions";
 import Pagination from "../../components/Pagination";
-import ReactLoading from "react-loading";
+import { LoadingFullScreen } from "../../components/Loadings";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -23,14 +23,7 @@ const Products = () => {
 
   return (
     <div className="container mt-md-5 mt-3 mb-7">
-      {isLoading && (
-        <div
-          className="position-fixed top-0 bottom-0 start-0 end-0 bg-gray opacity-75 d-flex justify-content-center align-items-center"
-          style={{ zIndex: 10000, backdropFilter: "blur(3px)" }}
-        >
-          <ReactLoading type="cylon" color="white" height={50} width={150} />
-        </div>
-      )}
+      {isLoading && <LoadingFullScreen />}
       <div className="row">
         {products.map((product) => {
           return (

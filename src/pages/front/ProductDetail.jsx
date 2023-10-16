@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { addProductToCart, getProduct } from "../../api/functions";
 import { useOutletContext, useParams } from "react-router-dom";
 import { MessageContext } from "../../store/message";
-import ReactLoading from "react-loading";
+import { LoadingButton } from "../../components/Loadings";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState({});
@@ -147,10 +147,10 @@ const ProductDetail = () => {
           </div>
         </div>
         <div className="col-md-4">
-          <div className="input-group mb-3 border mt-3">
+          <div className="input-group mb-3 border rounded-pill mt-3">
             <div className="input-group-prepend">
               <button
-                className="btn btn-outline-dark rounded-0 border-0 py-3"
+                className="btn btn-outline-dark rounded-start-5 rounded-end-0 border-0 p-3"
                 type="button"
                 id="button-addon1"
                 onClick={() => {
@@ -173,7 +173,7 @@ const ProductDetail = () => {
             />
             <div className="input-group-append">
               <button
-                className="btn btn-outline-dark rounded-0 border-0 py-3"
+                className="btn btn-outline-dark rounded-start-0 rounded-end-5 border-0 p-3"
                 type="button"
                 id="button-addon2"
                 onClick={() => {
@@ -185,16 +185,12 @@ const ProductDetail = () => {
             </div>
           </div>
           <button
-            className="btn btn-dark w-100 rounded-0 d-flex justify-content-center align-items-center"
+            className="btn btn-dark w-100 rounded-pill d-flex justify-content-center align-items-center"
             style={{ height: "60px" }}
             onClick={addToCart}
             disabled={isLoading}
           >
-            {isLoading ? (
-              <ReactLoading type="cylon" color="white" height={60} />
-            ) : (
-              "加入購物車"
-            )}
+            {isLoading ? <LoadingButton /> : "加入購物車"}
           </button>
         </div>
       </div>

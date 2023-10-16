@@ -77,7 +77,7 @@ const Dashboard = () => {
               className="list-group-item list-group-item-action py-3"
               to="/admin/products"
             >
-              <i className="bi bi-cup-fill me-2" />
+              <i className="bi bi-keyboard-fill me-2" />
               產品列表
             </NavLink>
             <NavLink

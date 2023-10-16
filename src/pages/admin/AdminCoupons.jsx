@@ -4,6 +4,7 @@ import { Modal } from "bootstrap";
 import DeleteModal from "../../components/DeleteModal";
 import Pagination from "../../components/Pagination";
 import CouponModal from "../../components/CouponModal";
+import { LoadingFullScreen } from "../../components/Loadings";
 
 const CREATE_COUPON = "create-coupon";
 const EDIT_COUPON = "edit-coupon";
@@ -13,6 +14,7 @@ const AdminCoupons = () => {
   const [pagination, setPagination] = useState({});
   const [type, setType] = useState(CREATE_COUPON);
   const [tempCoupon, setTempCoupon] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const couponModal = useRef();
   const deleteModal = useRef();
@@ -30,9 +32,12 @@ const AdminCoupons = () => {
   }, []);
 
   const fetchCoupons = async (page) => {
+    setIsLoading(true);
+
     const couponRes = await getAdminCoupons(page);
     setCoupons(couponRes.data.coupons);
     setPagination(couponRes.data.pagination);
+    setIsLoading(false);
   };
 
   const openCouponModal = (type, coupon) => {
@@ -76,6 +81,7 @@ const AdminCoupons = () => {
 
   return (
     <div className="p-3">
+      {isLoading && <LoadingFullScreen />}
       <CouponModal
         closeCouponModal={closeCouponModal}
         fetchCoupons={fetchCoupons}

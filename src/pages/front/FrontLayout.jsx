@@ -7,11 +7,13 @@ import { MessageContextProvider } from "../../store/message";
 
 const FrontLayout = () => {
   const [cartData, setCartData] = useState({});
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const fetchCart = async () => {
     try {
       const res = await getCartProducts();
       setCartData(res.data.data);
+      setIsEmpty(res.data.data.carts.length === 0);
     } catch (error) {
       console.log(error);
     }
@@ -25,28 +27,11 @@ const FrontLayout = () => {
     <MessageContextProvider>
       <Message />
       <NavBar cartData={cartData} />
-      <Outlet context={{ fetchCart, cartData }} />
+      <Outlet context={{ fetchCart, cartData, isEmpty }} />
       <div className="bg-dark">
         <div className="container">
-          <div className="d-flex align-items-center justify-content-between text-white py-4">
+          <div className="d-flex align-items-center justify-content-center text-white py-4">
             <p className="mb-0">© 本網站僅做學習用途，不牽涉任何商業行為</p>
-            <ul className="d-flex list-unstyled mb-0 h4">
-              <li>
-                <a href="#" className="text-white mx-3">
-                  <i className="fab fa-facebook"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-white mx-3">
-                  <i className="fab fa-instagram"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-white ms-3">
-                  <i className="fab fa-line"></i>
-                </a>
-              </li>
-            </ul>
           </div>
         </div>
       </div>

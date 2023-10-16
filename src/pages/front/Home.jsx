@@ -5,9 +5,8 @@ const Home = () => {
         <div className="row flex-md-row-reverse flex-column">
           <div className="col-md-6">
             <img
-              src="https://images.unsplash.com/photo-1526038335545-4b96864eaee7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80
-          alt="
-              className="img-fluid"
+              src="https://images.unsplash.com/photo-1586776977607-310e9c725c37?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+              className="img-fluid rounded-4"
             />
           </div>
           <div className="col-md-6 d-flex flex-column justify-content-center mt-md-0 mt-3">
@@ -18,17 +17,17 @@ const Home = () => {
             </h5>
             <div className="input-group mb-0 mt-4">
               <input
-                type="text"
-                className="form-control rounded-0"
+                type="search"
+                className="form-control rounded-start-5 rounded-end-0"
                 placeholder=""
               />
               <div className="input-group-append">
                 <button
-                  className="btn btn-dark rounded-0"
+                  className="btn btn-dark rounded-start-0 rounded-end-5 w-100"
                   type="button"
                   id="search"
                 >
-                  Lorem ipsum
+                  搜尋商品
                 </button>
               </div>
             </div>
@@ -185,7 +184,7 @@ const Home = () => {
                 <div className="row justify-content-center py-7">
                   <div className="col-md-8 d-flex">
                     <img
-                      src="https://images.unsplash.com/photo-1490138139357-fc819d02e344?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"
+                      src="../../src/images/logo-round.png"
                       alt=""
                       className="rounded-circle me-5"
                       style={{
@@ -201,7 +200,7 @@ const Home = () => {
                         et dolore magna aliquyam erat.”
                       </p>
                       <p className="mt-auto text-muted">
-                        Lorem ipsum dolor sit amet.
+                       --KeyInLife
                       </p>
                     </div>
                   </div>

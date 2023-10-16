@@ -1,19 +1,20 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useOutletContext, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getOrderById } from "../../api/functions";
 
 const CheckoutSuccess = () => {
+  const { fetchCart } = useOutletContext();
   const { orderId } = useParams();
   const [orderData, setOrderData] = useState({});
 
   const fetchOrder = async (id) => {
     const res = await getOrderById(id);
-    console.log(res);
     setOrderData(res.data.order);
   };
 
   useEffect(() => {
     fetchOrder(orderId);
+    fetchCart();
   }, [orderId]);
 
   return (
@@ -22,7 +23,7 @@ const CheckoutSuccess = () => {
         style={{
           minHeight: "400px",
           backgroundImage:
-            "url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)",
+            "url(https://images.unsplash.com/photo-1529236183275-4fdcf2bc987e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2067&q=80)",
           backgroundPosition: "center center",
         }}
       ></div>
@@ -36,7 +37,7 @@ const CheckoutSuccess = () => {
             </p>
             <Link
               to="/"
-              className="btn w-100 btn-outline-dark me-2 rounded-0 mb-4"
+              className="btn w-100 btn-dark py-3 rounded-pill me-2 mb-4"
             >
               回到首頁
             </Link>
@@ -65,7 +66,7 @@ const CheckoutSuccess = () => {
                           <div className="w-100 d-flex flex-column">
                             <div className="d-flex justify-content-between fw-bold">
                               <h5>{item.product.title}</h5>
-                              <p className="mb-0">x {item.qty}</p>
+                              <p className="mb-0">x{item.qty}</p>
                             </div>
                             <div className="d-flex justify-content-between mt-auto">
                               <p className="text-muted mb-0">
@@ -86,16 +87,18 @@ const CheckoutSuccess = () => {
                             scope="row"
                             className="border-0 px-0 font-weight-normal"
                           >
-                            Lorem ipsum
+                            商品金額
                           </th>
-                          <td className="text-end border-0 px-0">NT$ {orderData.total}</td>
+                          <td className="text-end border-0 px-0">
+                            NT$ {orderData.total}
+                          </td>
                         </tr>
                         <tr>
                           <th
                             scope="row"
                             className="border-0 px-0 pt-0 font-weight-normal"
                           >
-                            Payment
+                            付款方式
                           </th>
                           <td className="text-end border-0 px-0 pt-0">
                             ApplePay
@@ -104,7 +107,7 @@ const CheckoutSuccess = () => {
                       </tbody>
                     </table>
                     <div className="d-flex justify-content-between mt-2">
-                      <p className="mb-0 h4 fw-bold">Lorem ipsum</p>
+                      <p className="mb-0 h4 fw-bold">總金額</p>
                       <p className="mb-0 h4 fw-bold">NT$ {orderData.total}</p>
                     </div>
                   </li>

@@ -4,6 +4,7 @@ import { Modal } from "bootstrap";
 import ProductModal from "../../components/ProductModal";
 import DeleteModal from "../../components/DeleteModal";
 import Pagination from "../../components/Pagination";
+import { LoadingFullScreen } from "../../components/Loadings";
 
 const CREATE_PRODUCT = "create-product";
 const EDIT_PRODUCT = "edit-product";
@@ -13,6 +14,7 @@ const AdminProducts = () => {
   const [pagination, setPagination] = useState({});
   const [type, setType] = useState(CREATE_PRODUCT);
   const [tempProduct, setTempProduct] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const productModal = useRef();
   const deleteModal = useRef();
@@ -30,9 +32,12 @@ const AdminProducts = () => {
   }, []);
 
   const fetchProducts = async (page) => {
+    setIsLoading(true);
+
     const productRes = await getAdminProducts(page);
     setProducts(productRes.data.products);
     setPagination(productRes.data.pagination);
+    setIsLoading(false);
   };
 
   const openProductModal = (type, product) => {
@@ -68,6 +73,7 @@ const AdminProducts = () => {
 
   return (
     <div className="p-3">
+      {isLoading && <LoadingFullScreen />}
       <ProductModal
         closeProductModal={closeProductModal}
         fetchProducts={fetchProducts}

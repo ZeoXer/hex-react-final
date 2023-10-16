@@ -3,9 +3,12 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Input } from "../../components/FormComponents";
 import { checkoutOrder } from "../../api/functions";
+import { useState } from "react";
+import { LoadingButton } from "../../components/Loadings";
 
 const Checkout = () => {
   const { cartData } = useOutletContext();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -27,7 +30,9 @@ const Checkout = () => {
       message: "這是留言",
     };
 
+    setIsLoading(true);
     const res = await checkoutOrder(form);
+    setIsLoading(false);
     navigate(`/success/${res.data.orderId}`);
   };
 
@@ -104,26 +109,27 @@ const Checkout = () => {
               </div>
             </div>
             <div className="d-flex flex-column-reverse flex-md-row mt-4 justify-content-between align-items-md-center align-items-end w-100">
-              <Link className="text-dark mt-md-0 mt-3" to="/cart">
-                <i className="bi bi-chevron-left me-2"></i> 繼續點餐
+              <Link className="text-dark mt-md-0 mt-3" to="/products">
+                <i className="bi bi-chevron-left me-2"></i> 繼續購物
               </Link>
               <button
                 type="submit"
-                className="btn btn-dark py-3 px-7 rounded-0"
+                className="btn btn-dark py-3 px-7 rounded-pill d-flex align-items-center"
+                style={{ height: "60px" }}
               >
-                送出表單
+                {isLoading ? <LoadingButton /> : "送出訂單"}
               </button>
             </div>
           </form>
           <div className="col-md-4">
-            {/* <div className="border p-4 mb-4">
-              <h4 className="mb-4">選購餐點</h4>
+            <div className="border p-4 mb-4">
+              <h4 className="mb-4 fw-bold">訂單明細</h4>
               {cartData?.carts?.map((item) => {
                 return (
-                  <div className="d-flex" key="item.id">
+                  <div className="d-flex" key={item.id}>
                     <img
                       src={item.product.imageUrl}
-                      alt=""
+                      alt={item.product.title}
                       className="me-2"
                       style={{
                         width: "48px",
@@ -147,10 +153,10 @@ const Checkout = () => {
                 );
               })}
               <div className="d-flex justify-content-between mt-4">
-                <p className="mb-0 h4 fw-bold">Total</p>
+                <p className="mb-0 h4 fw-bold">總金額</p>
                 <p className="mb-0 h4 fw-bold">NT$ {cartData.final_total}</p>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
