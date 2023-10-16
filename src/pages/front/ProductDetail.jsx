@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { addProductToCart, getProduct } from "../../api/functions";
 import { useOutletContext, useParams } from "react-router-dom";
 import { MessageContext } from "../../store/message";
+import ReactLoading from "react-loading";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState({});
@@ -46,7 +47,7 @@ const ProductDetail = () => {
           minHeight: "400px",
           backgroundImage: `url(${product.imageUrl})`,
           backgroundPosition: "center center",
-          backgroundRepeat: "no-repeat"
+          backgroundRepeat: "no-repeat",
         }}
       ></div>
       <div className="row justify-content-between mt-4 mb-7">
@@ -184,11 +185,16 @@ const ProductDetail = () => {
             </div>
           </div>
           <button
-            className="btn btn-dark w-100 rounded-0 py-3"
+            className="btn btn-dark w-100 rounded-0 d-flex justify-content-center align-items-center"
+            style={{ height: "60px" }}
             onClick={addToCart}
             disabled={isLoading}
           >
-            加入購物車
+            {isLoading ? (
+              <ReactLoading type="cylon" color="white" height={60} />
+            ) : (
+              "加入購物車"
+            )}
           </button>
         </div>
       </div>

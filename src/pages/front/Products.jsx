@@ -2,15 +2,19 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getProducts } from "../../api/functions";
 import Pagination from "../../components/Pagination";
+import ReactLoading from "react-loading";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [pagination, setPagination] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchProducts = async (page) => {
+    setIsLoading(true);
     const res = await getProducts(page);
     setProducts(res.data.products);
     setPagination(res.data.pagination);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -19,6 +23,14 @@ const Products = () => {
 
   return (
     <div className="container mt-md-5 mt-3 mb-7">
+      {isLoading && (
+        <div
+          className="position-fixed top-0 bottom-0 start-0 end-0 bg-gray opacity-75 d-flex justify-content-center align-items-center"
+          style={{ zIndex: 10000, backdropFilter: "blur(3px)" }}
+        >
+          <ReactLoading type="cylon" color="white" height={50} width={150} />
+        </div>
+      )}
       <div className="row">
         {products.map((product) => {
           return (
@@ -47,7 +59,9 @@ const Products = () => {
                   <p className="card-text text-muted mb-0">
                     {product.description}
                   </p>
-                  <p className="text-muted mt-3 fs-5 fw-bold">NT$ {product.price}</p>
+                  <p className="text-muted mt-3 fs-5 fw-bold">
+                    NT$ {product.price}
+                  </p>
                 </div>
               </div>
             </div>
