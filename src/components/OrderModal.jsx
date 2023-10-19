@@ -34,9 +34,9 @@ const OrderModal = ({ closeProductModal, fetchOrders, tempOrder }) => {
     setIsLoading(true);
     try {
       const res = await editOrderById(tempOrder.id, tempData);
-      handleSuccessMessage(res);
       setIsLoading(false);
       fetchOrders();
+      handleSuccessMessage(res);
     } catch (error) {
       setIsLoading(false);
       handleFailMessage(error);

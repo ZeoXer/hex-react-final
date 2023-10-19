@@ -48,9 +48,9 @@ const CouponModal = ({
         res = await editCouponById(tempCoupon.id, tempData, date);
       }
       if (res.data.success) {
-        handleSuccessMessage(res);
         closeCouponModal();
         fetchCoupons();
+        handleSuccessMessage(res);
       }
     } catch (error) {
       handleFailMessage(error);

@@ -52,9 +52,9 @@ const ProductModal = ({
         res = await editProductById(tempProduct.id, tempData);
       }
       if (res.data.success) {
-        handleSuccessMessage(res);
         closeProductModal();
         fetchProducts();
+        handleSuccessMessage(res);
       }
     } catch (error) {
       handleFailMessage(error);

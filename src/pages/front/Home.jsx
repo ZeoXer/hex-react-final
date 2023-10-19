@@ -199,9 +199,7 @@ const Home = () => {
                         elitr, sed diam nonumy eirmod tempor invidunt ut labore
                         et dolore magna aliquyam erat.”
                       </p>
-                      <p className="mt-auto text-muted">
-                       --KeyInLife
-                      </p>
+                      <p className="mt-auto text-muted">--KeyInLife</p>
                     </div>
                   </div>
                 </div>

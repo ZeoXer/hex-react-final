@@ -13,3 +13,7 @@
 .zoom-in:hover {
   transform: scale(1.2);
 }
+
+.fade-in {
+  transition: all 0.4s;
+}
