@@ -30,8 +30,8 @@ const ProductModal = ({
       setTempData({
         title: "",
         category: "",
-        origin_price: 100,
-        price: 300,
+        origin_price: 0,
+        price: 0,
         unit: "",
         description: "",
         content: "",

@@ -5,6 +5,8 @@ import ProductModal from "../../components/ProductModal";
 import DeleteModal from "../../components/DeleteModal";
 import Pagination from "../../components/Pagination";
 import { LoadingFullScreen } from "../../components/Loadings";
+import { useContext } from "react";
+import { MessageContext } from "../../store/message";
 
 const CREATE_PRODUCT = "create-product";
 const EDIT_PRODUCT = "edit-product";
@@ -15,6 +17,8 @@ const AdminProducts = () => {
   const [type, setType] = useState(CREATE_PRODUCT);
   const [tempProduct, setTempProduct] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const { handleSuccessMessage, handleFailMessage } =
+    useContext(MessageContext);
 
   const productModal = useRef();
   const deleteModal = useRef();
@@ -61,13 +65,14 @@ const AdminProducts = () => {
 
   const deleteProduct = async (id) => {
     try {
-      const { data } = await deleteProductById(id);
-      if (data.success) {
+      const res = await deleteProductById(id);
+      if (res.data.success) {
         closeDeleteModal();
         fetchProducts();
+        handleSuccessMessage(res);
       }
     } catch (error) {
-      console.log(error);
+      handleFailMessage(error);
     }
   };
 
