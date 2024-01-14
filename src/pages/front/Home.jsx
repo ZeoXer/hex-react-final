@@ -1,4 +1,19 @@
+import { useEffect, useState } from "react";
+import { getProducts } from "../../api/functions";
+import { Link } from "react-router-dom";
+
 const Home = () => {
+  const [products, setProducts] = useState([]);
+
+  const fetchProducts = async (page) => {
+    const res = await getProducts(page);
+    setProducts(res.data.products);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   return (
     <>
       <div className="container">
@@ -10,10 +25,9 @@ const Home = () => {
             />
           </div>
           <div className="col-md-6 d-flex flex-column justify-content-center mt-md-0 mt-3">
-            <h2 className="fw-bold">Lorem ipsum dolor sit</h2>
+            <h1 className="fw-bold">KeyInLife</h1>
             <h5 className="font-weight-normal text-muted mt-2">
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor
+              A good keyboard is the key of better life.
             </h5>
             <div className="input-group mb-0 mt-4">
               <input
@@ -33,91 +47,37 @@ const Home = () => {
             </div>
           </div>
         </div>
+        <h2 className="fw-bold">熱銷系列</h2>
         <div className="row mt-5">
-          <div className="col-md-6 mt-md-4">
-            <div className="card border-0 mb-4 position-relative position-relative">
-              <img
-                src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80"
-                className="card-img-top rounded-0"
-                alt="..."
-              />
-              <div className="card-body p-0">
-                <h4 className="mb-0 mt-4">Lorem ipsum</h4>
-                <div className="d-flex justify-content-between mt-3">
-                  <p className="card-text text-muted mb-0 w-75">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                    diam nonumy eirmod.
-                  </p>
-                  <button className="btn btn-outline-dark rounded-0 text-nowrap">
-                    Lorem ipsum
-                  </button>
+          {products.map((item, idx) => {
+            if (idx < 4) {
+              return (
+                <div key={idx} className="col-md-6 mt-md-4">
+                  <div className="card border-0 mb-4 position-relative position-relative">
+                    <img
+                      src={item.imageUrl}
+                      className="card-img-top rounded-0"
+                      alt="..."
+                    />
+                    <div className="card-body p-0">
+                      <h4 className="mb-0 mt-4">{item.title}</h4>
+                      <div className="d-flex justify-content-between align-items-center mt-3">
+                        <p className="card-text text-muted mb-0 w-75">
+                          {item.description}
+                        </p>
+                        <Link
+                          to={`/product/${item.id}`}
+                          className="btn btn-outline-dark rounded-pill px-3 py-2 text-nowrap"
+                        >
+                          探索
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6 mt-md-4">
-            <div className="card border-0 mb-4 position-relative position-relative">
-              <img
-                src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80"
-                className="card-img-top rounded-0"
-                alt="..."
-              />
-              <div className="card-body p-0">
-                <h4 className="mb-0 mt-4">Lorem ipsum</h4>
-                <div className="d-flex justify-content-between mt-3">
-                  <p className="card-text text-muted mb-0 w-75">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                    diam nonumy eirmod.
-                  </p>
-                  <button className="btn btn-outline-dark rounded-0 text-nowrap">
-                    Lorem ipsum
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6 mt-md-4">
-            <div className="card border-0 mb-4 position-relative position-relative">
-              <img
-                src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80"
-                className="card-img-top rounded-0"
-                alt="..."
-              />
-              <div className="card-body p-0">
-                <h4 className="mb-0 mt-4">Lorem ipsum</h4>
-                <div className="d-flex justify-content-between mt-3">
-                  <p className="card-text text-muted mb-0 w-75">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                    diam nonumy eirmod.
-                  </p>
-                  <button className="btn btn-outline-dark rounded-0 text-nowrap">
-                    Lorem ipsum
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6 mt-md-4">
-            <div className="card border-0 mb-4 position-relative position-relative">
-              <img
-                src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80"
-                className="card-img-top rounded-0"
-                alt="..."
-              />
-              <div className="card-body p-0">
-                <h4 className="mb-0 mt-4">Lorem ipsum</h4>
-                <div className="d-flex justify-content-between mt-3">
-                  <p className="card-text text-muted mb-0 w-75">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                    diam nonumy eirmod.
-                  </p>
-                  <button className="btn btn-outline-dark rounded-0 text-nowrap">
-                    Lorem ipsum
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+              );
+            }
+          })}
         </div>
       </div>
       <div className="bg-light mt-7">
@@ -276,14 +236,18 @@ const Home = () => {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-md-4 text-center">
-              <h3>Lorem ipsum</h3>
-              <p className="text-muted">
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod.
-              </p>
-              <button className="btn btn-dark mt-4 rounded-0">
-                Lorem ipsum
-              </button>
+              <h3>有任何問題嗎？歡迎聯繫我們！</h3>
+              <ul className="list-unstyled text-muted">
+                <li>
+                  電話： <a href="tel:">0912345678</a>
+                </li>
+                <li>
+                  信箱： <a href="mailto:">hexschool@gmail.com</a>
+                </li>
+              </ul>
+              <Link to={"/products"} className="btn btn-dark mt-4 rounded-0">
+                前往產品列表
+              </Link>
             </div>
           </div>
         </div>
